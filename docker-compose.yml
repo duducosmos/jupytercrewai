@@ -1,0 +1,56 @@
+services:
+  jupyter-8888:
+    runtime: nvidia
+    build:
+      context: .
+      dockerfile: Dockerfile  # Reference to the Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: "nvidia"
+              count: 1
+              capabilities: [ gpu ]
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - GRANT_SUDO=yes
+      - JUPYTER_TOKEN=token
+      - CHOWN_HOME=yes
+      - CHOWN_HOME_OPTS=-R
+    depends_on:
+      - ollama
+    networks:
+      - ollama-docker-pg
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./workspace:/home/jovyan/workspace
+      - ./logs:/home/jovyan/logs
+
+  ollama:
+    runtime: nvidia
+    container_name: ollamaprojectgate
+    image: ollama/ollama:latest
+    ports:
+      - "11435:11434"
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+    networks:
+      - ollama-docker-pg
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: "nvidia"
+              count: 1
+              capabilities: [ gpu ]
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./ollama/ollama:/root/.ollama
+
+networks:
+  ollama-docker-pg:
+    external: false

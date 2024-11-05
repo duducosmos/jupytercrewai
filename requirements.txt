@@ -1,0 +1,13 @@
+langchain
+chromadb
+requests
+python-dotenv
+pandas 
+langchain 
+langchainhub 
+sentence_transformers
+langchain_chroma 
+langchain_ollama
+langchain_community
+crewai
+crewai_tools
