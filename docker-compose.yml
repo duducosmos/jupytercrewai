@@ -31,7 +31,7 @@ services:
 
   ollama:
     runtime: nvidia
-    container_name: ollamaprojectgate
+    container_name: ollamacrewai
     image: ollama/ollama:latest
     ports:
       - "11435:11434"

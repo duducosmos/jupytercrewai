@@ -15,6 +15,8 @@ RUN apt-get update && \
 # Switch back to the default user (jovyan)
 USER jovyan
 
+COPY requirements.txt ./requirements.txt
+RUN pip install --no-cache -r requirements.txt 
 # Expose the default Jupyter port
 EXPOSE 8888
 

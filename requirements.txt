@@ -11,3 +11,4 @@ langchain_ollama
 langchain_community
 crewai
 crewai_tools
+tf-keras
